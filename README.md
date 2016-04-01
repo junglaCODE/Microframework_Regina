@@ -1,2 +1,5 @@
 # Microframework_Regina
-[Microframework Regina] elaborado con todas las buenas intenciones de aportar algo ala comunidad PHP en Guanajuarto,mexico
+[Microframework Regina] creado con todas las buenas intenciones de ayudar.
+
+Dedicado a mi hija: Regina Yolotzi Garcia Morales :::La amo:::
+Desde Villagran,Gto;Mexico Para el mundo
