@@ -23,10 +23,9 @@ sirve para mariaDB*/
 define('__MySQL__','{
     "usuario":"monolinux",
     "password":":D",
-    "database":":(",
+    "basedatos":":(",
     "servidor":"localhost",
-    "puerto":3306,
-    "charset":"utf8"
+    "puerto":3306
     }'); 
 /*parametros de conexion de mysql*/
 /*

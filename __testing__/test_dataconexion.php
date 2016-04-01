@@ -8,5 +8,5 @@
 
 require '../__librerias/dataconexion.inc.php';
 $conexion = new Conexion_Databases();
-Conexion_Databases::consoleDebug('version');
+Conexion_Databases::consoleDebug('info');
 

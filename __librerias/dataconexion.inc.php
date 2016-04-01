@@ -22,7 +22,6 @@ class Conexion_Databases {
 
     private $__CONEXION = null; /* Establece un canal de comunicación con el BD atravez del DSN */
     protected $__PDO = null; /* Objeto de tipo PDO que se crea si la conexion es exitosa */
-    protected $__PARAMETROS = null; /* Arreglo de configuraciones basadas en el json de config_app */
 
     /**
      * funcion de tipo void que carga el variable global __PARAMETROS apartir del driver de
@@ -31,14 +30,25 @@ class Conexion_Databases {
      * @param String $driver 
      */
     protected function __loadingParametros__($driver) {
+        $DSN = array(); /* construcion del Nombre de Origen de Datos (DSN)*/
         switch (strtolower($driver)):
             case 'mysql':
-                return (json_decode(__MySQL__)) ? json_decode(__MySQL__) : 'parametros json incorrectos';
+                /* http://php.net/manual/es/ref.pdo-mysql.connection.php */
+                if (json_decode(__MySQL__)) :
+                    $__set = json_decode(__MySQL__);
+                    $DSN[0] = "mysql:host='".$__set->{'servidor'}."';port='".$__set->{'puerto'}."';dbname='".$__set->{'basedatos'}."'";
+                    $DSN[1] = $__set->{'usuario'};
+                    $DSN[2] = $__set->{'password'};
+                    return $DSN;
+                else:
+                    print 'parametros json incorrectos';
+                    exit(); /* saliendo del  programa cuando el dsn esta mal construido */
+            endif;
             default:
                 print 'driver no encontrado :(';
         endswitch;
     }
-    
+
     /**
      * funcion tipo que puede ayudar al desarrollador a ver el funcionamiento de dicha
      * clase como tambien el testar los parametros de conexion; todas las salidas
@@ -47,48 +57,30 @@ class Conexion_Databases {
      * @param string $comando para reabar informacion
      * @param type $driver el driver a tester
      */
-
-    static function consoleDebug($comando, $driver = __DRIVER__) {        
+    static function consoleDebug($comando, $driver = __DRIVER__) {
         switch ($comando):
             case 'info':
-                print_r(self::__loadingParametros__($driver));
+                self::__setConnectionToDB__($driver, __FUNCTION__);
                 break;
             case 'version':
-                print 'Microframework Reginas Clase [ '.__CLASS__.' version '.self::__VERSION__ . ' ]';
+                print 'Microframework Reginas Clase [ ' . __CLASS__ . ' version ' . self::__VERSION__ . ' ]';
                 break;
             default :
                 print 'Opcion no permitida :(';
         endswitch;
     }
 
-//visualiza el mensaje de parametros de conexion
-
-    protected function __establecerConexion__() {
-        list($recurso__, $usuario__, $password__) = parent::__estructuraDSN__();
-        /* genera una lista de parametros apartir del dsn de la clase de parametros */
+    protected function __setConnectionToDB__($driver = __DRIVER__) {
+        list($recurso__,$usuario__,$password__) = self::__loadingParametros__($driver);
+        /* genera una lista de parametros apartir del json del archivo de configuracion */
         try {//establece la conexion
             $this->__CONEXION = new PDO($recurso__, $usuario__, $password__, array(PDO::ATTR_PERSISTENT => true,
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
             return 'Su conexión has sido satisfactoria' . PHP_EOL . $this->showDataconnection__(__DEBUG__);
         } catch (PDOException $error) { //en caso que no se conecte manda los parametros
-            return $this->tipoErrores__('Existe un problema al intertar conectarse', $error);
+            echo 'Existe un problema al intertar conectarse';
         }//fin del trycatch
     }
-
-//esta función establece la conexion hacia la base de datos
-
-    protected function __comprobarConexion__() {
-        $log = $this->__establecerConexion__();
-        if (is_object($this->__CONEXION)):
-            print $log; //salidas de errores
-            $this->__desconectarConexion__();
-        else:
-            print $log; // salida de errores
-            exit(); // termino del script
-        endif;
-    }
-
-//fin de la fincion de comprobacion de conexiones
 
     private function tipoErrores__($mensaje/* string */, $excepcion /* objeto */) {
         if (__DEBUG__)://si el debug esta en false entonces no se mostrar errores de forma tester
@@ -197,39 +189,7 @@ class Conexion_Databases {
         return substr($SQL__, 0, -1) . ' where ' . $where;
     }
 
-    /* Estas metodos sirve para modificar los parametros de conexion en caso que se quiera hacer
-      peticiones ha otra base de datos */
-
-    protected function __setBaseDatos__($basedatos /* string */) {
-        $this->__BD = $basedatos;
-    }
-
-//fin de clase setbasedatos
-
-    protected function __setPassword__($password /* string */) {
-        $this->__PASSW = $password;
-    }
-
-//fin de clase setpassword
-
-    protected function __setPuerto__($puerto /* string */) {
-        $this->__PORT = $puerto;
-    }
-
-//fin de clase setpuerto
-
-    protected function __setServidor__($servidor /* string */) {
-        $this->__SERVER = $servidor;
-    }
-
-//fin de clase setservidor
-
-    protected function __setUsuario__($usuario /* string */) {
-        $this->__USER = $usuario;
-    }
-
-//fin de clase setusuario
-    //Metodos abstractos de la clase Parametros Conexion
+//Metodos abstractos de la clase Parametros Conexion
 
     protected function __desconectarConexion__() {
         unset($this->__CONEXION);
