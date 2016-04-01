@@ -1,5 +1,9 @@
 # Microframework_Regina
+
 [Microframework Regina] creado con todas las buenas intenciones de ayudar.
 
-Dedicado a mi hija: Regina Yolotzi Garcia Morales :::La amo:::
-Desde Villagran,Gto;Mexico Para el mundo
+Idea Principal .- Juan Luis Garcia Corrales [ alias @monolinux ]
+
+Dedicado con todo mi amor hacia mi hija  --Regina Yolotzi Garcia Morales--
+
+Desde Villagran,Gto. Mexico para el mundo entero
