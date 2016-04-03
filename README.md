@@ -48,9 +48,9 @@ pero despues de la version estable me podre a documentar :D*/
 
 -- WÍINKIL PRINCIPAL DE REGINA /*HASTA EL MOMENTO*/
 
----Microframework_Regina
------- __config : archivos de configuración global de la aplicación a desarrollar
------- __librerias : lugar donde se almacenaran todas las librerias propias del framework como externar.
------- __testing__ : lugar donde se debugeara las clases, se puede borrar el directorio ya que puede estar propensa a errores
+**Microframework_Regina**
+- __config : archivos de configuración global de la aplicación a desarrollar
+- __librerias : lugar donde se almacenaran todas las librerias propias del framework como externar.
+- __testing__ : lugar donde se debugeara las clases, se puede borrar el directorio ya que puede estar propensa a errores
 
  /*por el momento son todos los directorios pero habra mas por lo que esten al pendiente*/
