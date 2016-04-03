@@ -32,11 +32,11 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 ================================================================================
 
 # Requerimientos:
--PHP version 5.x.x en adelante
--modulo PDO en PHP fuente : http://php.net/manual/es/book.pdo.php
--La conexión hacia base de datos:
- -- mysql 5.5.x en adelante
- -- mariaDB 10.x.x en adelante
+- PHP version 5.x.x en adelante
+- Modulo PDO en PHP fuente : http://php.net/manual/es/book.pdo.php
+- La conexión hacia base de datos:
+  - mysql 5.5.x en adelante
+  - mariaDB 10.x.x en adelante
 /* :( Por el momento nuestra libreria de conexion soporta esos SGDB */
 
 # WÍINKIL esta palabra es significa cuerpo y es de origen maya. 
