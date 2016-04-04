@@ -1,8 +1,8 @@
 # Microframework_Regina **creado con todas las buenas intenciones**
 
--Idea Principal .- Juan Luis Garcia Corrales [ alias @monolinux ]
--Dedicado con todo mi amor hacia mi hija  --Regina Yolotzi Garcia Morales--
--Desde Villagran,Gto. Mexico para el mundo entero
+- Idea Principal .- Juan Luis Garcia Corrales [ alias @monolinux ]
+- Dedicado con todo mi amor hacia mi hija  --Regina Yolotzi Garcia Morales--
+- Desde Villagran,Gto. Mexico para el mundo entero
 
 =====================================================
 
