@@ -44,7 +44,7 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 /*no me metere mas a fondo con los directorios ya que quiero avanzar mas rapido en el desarrollo
 pero despues de la version estable me podre a documentar :D*/
 
--- WÍINKIL PRINCIPAL DE REGINA /*HASTA EL MOMENTO*/
+-- WÍINKIL PRINCIPAL DE REGINA /*HASTA EL MOMENTO*/asteringOpenCV/code/edit/master/README.md
 
 **Microframework_Regina**
 - __config : archivos de configuración global de la aplicación a desarrollar
