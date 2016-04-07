@@ -56,29 +56,26 @@ pero despues de la version estable me podre a documentar :D*/
 **__librerias** : 
 -okol_modelos .- palabra maya que significa entrada a modelos, esta libreria es la encargada de estableces la conexión a los diferentes SGDB
     -conectores .- interface donde se podran especificar el programador los diferentes conexiones a los gestores de base de datos [mysql,postgresql,sqlite]
-       ---------------------------------------------------------------------------------------------------------------------------------------------------------
-      const __ParametrosConexion = '{"user":"monolinux","pass":"jungla{code}","bd":"demos","server":"localhost","port":3306}'; 
-       ---------------------------------------------------------------------------------------------------------------------------------------------------------
     -seguridad   .- es una clase que nos ayudara a evitar ataques al motor de base de datos como [sqlinjectión ] /*aun no esta completa*/
     -dataconexión .- esta es la clase que realmente hace la magia para la conexión solo necesita construir el dns.
 
-**ejemplo conexion**
---------------------------------------------------------------------------------
-require __DIR__.'/../__librerias/okol_modelos/dataconexion.inc.php';
 
+**Ejemplo conexion**
+--------------------------------------------------------------------------------
+require  '/../__librerias/okol_modelos/dataconexion.inc.php';
+ '{"user":"monolinux","pass":"jungla{code}","bd":"demos","server":"localhost","port":3306}';
+--------------------------------------------------------------------------------
 class testing_dataconexion extends Conexion_Databases {
 
     function __construct() {
         parent::__setConnectionToDB__();
     }
     
-    public function  __setDatosTable(){
+    public function  setDatosTable(){
         parent::___executePdo___('select * from new_table');
         $table = $this->__PDO->fetchAll();
-        var_dump($table);s
+        var_dump($table);
+    }
     }
 
-}
-$obj = new testing_dataconexion();
-$obj->__setDatosTable();
 --------------------------------------------------------------------------------
