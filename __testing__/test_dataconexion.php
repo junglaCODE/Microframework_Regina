@@ -6,7 +6,7 @@
  * $conexion->__loadingParametros__(); /para esto se debe cambiar la privacidad de la funcion
  */
 
-require '../__librerias/dataconexion.inc.php';
+require __DIR__.'/../__librerias/okol_modelos/dataconexion.inc.php';
 $conexion = new Conexion_Databases();
 Conexion_Databases::consoleDebug('info');
 

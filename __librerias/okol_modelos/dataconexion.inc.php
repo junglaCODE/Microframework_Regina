@@ -14,14 +14,15 @@
  */
 header("Content-Type: text/html;charset=utf-8"); //encabezado para el tipo de codificación
 
-require_once __DIR__ . '/../__config/config_app.php';
+require_once __DIR__ . '/../../__config/config_app.php';
+require_once __DIR__ . '/conectores.php';
 
-class Conexion_Databases {
+class Conexion_Databases implements Conectores_Databases {
 
     const __VERSION__ = '1.0';
 
     private $__CONEXION = null; /* Establece un canal de comunicación con el BD atravez del DSN */
-    protected $__PDO = null; /* Objeto de tipo PDO que se crea si la conexion es exitosa */
+    protected $__PDO = null; /* Objeto de tipo PDO que es utilzado para hacer referencias a todas de dicha clase */
 
     /**
      * funcion de tipo void que carga el variable global __PARAMETROS apartir del driver de
@@ -30,20 +31,10 @@ class Conexion_Databases {
      * @param String $driver 
      */
     protected function __loadingParametros__($driver) {
-        $DSN = array(); /* construcion del Nombre de Origen de Datos (DSN)*/
+        $DSN = Conectores_Databases::__ParametrosConexion;  /* construcion del Nombre de Origen de Datos (DSN) */
         switch (strtolower($driver)):
             case 'mysql':
-                /* http://php.net/manual/es/ref.pdo-mysql.connection.php */
-                if (json_decode(__MySQL__)) :
-                    $__set = json_decode(__MySQL__);
-                    $DSN[0] = "mysql:host='".$__set->{'servidor'}."';port='".$__set->{'puerto'}."';dbname='".$__set->{'basedatos'}."'";
-                    $DSN[1] = $__set->{'usuario'};
-                    $DSN[2] = $__set->{'password'};
-                    return $DSN;
-                else:
-                    print 'parametros json incorrectos';
-                    exit(); /* saliendo del  programa cuando el dsn esta mal construido */
-            endif;
+                return self::__conectorMysql($DSN);
             default:
                 print 'driver no encontrado :(';
         endswitch;
@@ -70,31 +61,24 @@ class Conexion_Databases {
         endswitch;
     }
 
+    /**
+     * 
+     * @param type $driver
+     */
     protected function __setConnectionToDB__($driver = __DRIVER__) {
-        list($recurso__,$usuario__,$password__) = self::__loadingParametros__($driver);
+        $__config__ = self::__loadingParametros__($driver);
         /* genera una lista de parametros apartir del json del archivo de configuracion */
         try {//establece la conexion
-            $this->__CONEXION = new PDO($recurso__, $usuario__, $password__, array(PDO::ATTR_PERSISTENT => true,
-                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"));
-            return 'Su conexión has sido satisfactoria' . PHP_EOL . $this->showDataconnection__(__DEBUG__);
+            $this->__CONEXION = new PDO($__config__['link'][0], $__config__['link'][1], $__config__['link'][2], $__config__['attributes']);
         } catch (PDOException $error) { //en caso que no se conecte manda los parametros
-            echo 'Existe un problema al intertar conectarse';
+            if (__DEBUG__):
+                print_r($error);
+            else:
+                print_r('error -' . $error->getCode() . ' : ' . $error->getFile() . ' linea : ' . $error->getLine()
+                        . PHP_EOL . $error->getMessage());
+            endif;
         }//fin del trycatch
     }
-
-    private function tipoErrores__($mensaje/* string */, $excepcion /* objeto */) {
-        if (__DEBUG__)://si el debug esta en false entonces no se mostrar errores de forma tester
-            return
-                    'Error en el script ' . $excepcion->getFile() . ' en la linea ' . $excepcion->getLine() . PHP_EOL .
-                    'Mensaje ' . $excepcion->getMessage() . PHP_EOL .
-                    $excepcion->getTraceAsString() . PHP_EOL;
-        else:
-            return
-                    $mensaje . PHP_EOL . $this->showDataconnection__(__DEBUG__);
-        endif;
-    }
-
-//fin de la funcion tipo de errores
 
     protected function ___executeSqlPdo___($consulta /* consulta SQL tipo String */) {
         if (!is_object($this->__CONEXION)) {
@@ -137,7 +121,7 @@ class Conexion_Databases {
             print 'No existe un conector PDO, quizá debería comprobar los parametros de conexión'
                     . PHP_EOL . $this->showDataconnection__(__DEBUG__);
             exit();
-        }// evitando salidas fallidas del conector de la base datos
+        }// evitando salidas fallidas del conector de la base datosattributes
         try {
             return $this->__CONEXION->exec($statement/* consulta SQL tipo String */);
         } catch (PDOException $error) {
@@ -165,35 +149,36 @@ class Conexion_Databases {
 
     /* metodos sin implementar */
 
-    protected function __createInsertSQL__($datos/* array */, $table/* database */, $safe = false) {
-        $VALUES__ = ""; /* datos para ser insertados */
-        $SQL__ = "INSERT INTO $table (";
-        foreach ($datos as $campos => $values):
-            $SQL__.='`' . $campos . '`,';
-            $VALUES__.="'$values',";
-        endforeach;
-        if ($safe):
-            $keys = array_keys($datos);
-            $placeholder = substr(str_repeat('?,', count($keys)), 0, -1);
-        else:
-            $placeholder = substr($VALUES__, 0, -1);
-        endif;
-        return substr($SQL__, 0, -1) . ') VALUES(' . $placeholder . ')';
-    }
-
-    protected function __createUpdateSQL__($datos/* array */, $table/* database */, $where) {
-        $SQL__ = "UPDATE `$table` SET ";
-        foreach ($datos as $campos => $values):
-            $SQL__.= "`$campos`='$values',";
-        endforeach;
-        return substr($SQL__, 0, -1) . ' where ' . $where;
-    }
-
 //Metodos abstractos de la clase Parametros Conexion
 
     protected function __desconectarConexion__() {
         unset($this->__CONEXION);
         unset($this->__PDO);
+    }
+
+    public function __conectorMysql($dsn) {
+        /* http://php.net/manual/es/ref.pdo-mysql.connection.php */
+        if (json_decode($dsn)) :
+            $__set = json_decode($dsn);
+            $DSN[0] = "mysql:host=" . $__set->{'server'} . ";port=" . $__set->{'port'} . ";dbname=" . $__set->{'bd'};
+            $DSN[1] = $__set->{'user'};
+            $DSN[2] = $__set->{'pass'};
+            return array('link' => $DSN, 'attributes' => array(
+                    PDO::ATTR_PERSISTENT => true,
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ));
+        else:
+            print 'parametros json incorrectos';
+            exit(); /* saliendo de la librerua cuando el dsn esta mal construido */
+        endif;
+    }
+
+    public function __conectorPostgresql($dns) {
+        
+    }
+
+    public function __conectorSqlite($dns) {
+        
     }
 
 //fin de la funcion desconectar
