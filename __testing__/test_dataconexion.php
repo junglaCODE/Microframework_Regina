@@ -7,6 +7,24 @@
  */
 
 require __DIR__.'/../__librerias/okol_modelos/dataconexion.inc.php';
-$conexion = new Conexion_Databases();
-Conexion_Databases::consoleDebug('info');
+
+class testing_dataconexion extends Conexion_Databases {
+
+    function __construct() {
+        parent::__setConnectionToDB__();
+    }
+    
+    public function  __setDatosTable(){
+        parent::___executePdo___('select * from new_table');
+        $table = $this->__PDO->fetchAll(PDO::FETCH_NUM);
+        var_dump($table);
+        foreach ($table as $rows):
+           echo  $rows[0].'----'.$rows[1].'----'.$rows[2].'\n';
+        endforeach;
+    }
+
+}
+
+$obj = new testing_dataconexion();
+$obj->__setDatosTable();
 

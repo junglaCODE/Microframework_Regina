@@ -48,19 +48,45 @@ class Conexion_Databases implements Conectores_Databases {
      * @param string $comando para reabar informacion
      * @param type $driver el driver a tester
      */
-    static function consoleDebug($comando, $driver = __DRIVER__) {
+    public function __consoleDebug($comando, $driver = __DRIVER__) {
         switch ($comando):
             case 'info':
-                if(self::__setConnectionToDB__($driver, __FUNCTION__)):
-                    ':) felicidades su conexión ha sido satisfactoria ahora puede interactuar con su base de datos';
+                if ($this->__setConnectionToDB__($driver, __FUNCTION__)):
+                    print ':) conexión satisfactoria :: show tables  { ' . PHP_EOL;
+                    $this->___executePdo___('show tables');
+                    var_dump($this->__PDO->fetchALL(PDO::FETCH_COLUMN)) . ' } ';
+                    $this->__offConnectionToDB__();
                 endif;
                 break;
             case 'version':
-                print 'Microframework Reginas Clase [ ' . __CLASS__ . ' version ' . self::__VERSION__ . ' ]';
+                print 'Microframework Reginas Clase [ ' . __CLASS__ . ' version ' . self::__VERSION__ . ' ]'.PHP_EOL.
+                    '@web = https://github.com/junglaCODE/Microframework_Regina';
                 break;
             default :
-                print 'Opcion no permitida :(';
+                print 'error -0 : Opción no permitida :(';
         endswitch;
+    }
+
+    /**
+     * esta funcion nos permite tracear los errores de nuestras librerias
+     * 
+     * @param obj $error exepcion genereda con el try catch
+     */
+    private function consoleErrors__($error) {
+        if (__DEBUG__):
+            print_r($error);
+        else:
+            print_r('error -' . $error->getCode() . ' : ' . $error->getFile() . ' linea : ' . $error->getLine()
+                    . PHP_EOL . $error->getMessage());
+        endif;
+    }
+
+    /**
+     * esta función sirve para quitar la conexión de preferencia usarla con el __destruct de los controladores
+     */
+    protected function __offConnectionToDB__() {
+        unset($this->__CONEXION);
+        unset($this->__PDO);
     }
 
     /**
@@ -75,90 +101,10 @@ class Conexion_Databases implements Conectores_Databases {
         try {//establece la conexion
             $this->__CONEXION = new PDO($__config__['link'][0], $__config__['link'][1], $__config__['link'][2], $__config__['attributes']);
             return true;
+            /* estableciendo el obj de la clase pdo */
         } catch (PDOException $error) { //en caso que no se conecte manda los parametros
-            if (__DEBUG__):
-                print_r($error);
-            else:
-                print_r('error -' . $error->getCode() . ' : ' . $error->getFile() . ' linea : ' . $error->getLine()
-                        . PHP_EOL . $error->getMessage());
-            endif;
-        }//fin del trycatch
-    }
-
-    protected function ___executeSqlPdo___($consulta /* consulta SQL tipo String */) {
-        if (!is_object($this->__CONEXION)) {
-            print 'No existe un objeto de tipo conexion, compruebe los parametros de conexión'
-                    . PHP_EOL . $this->showDataconnection__(__DEBUG__);
-            exit();
-        }// evitando salidas fallidas del conector de la base datos
-        $this->__PDO = $this->__CONEXION->prepare($consulta);
-        //crea un conector de tipo PDO atravez de la conexion del dns
-        try {
-            return $this->__PDO->execute(); //ejecuta todas los los querys y crea el objeto de dicha consulta
-            /* envia el apuntador PDO con toda la información de la consulta */
-        }//atrapando errores
-        catch (PDOException $error) {
-            return $this->tipoErrores__('No existe un objeto de tipo conexion, compruebe los parametros de conexión', $error);
-        }//fin de trycatch
-    }
-
-//fin de la funcion que ejecuta Consultas realizadas con SQL y alterar sus respuestas atravez del objeto PDO
-
-    protected function ___extraccionQuery___($consulta/* consulta SQL tipo String */) {
-        if (!is_object($this->__CONEXION)) {
-            print 'No existe un conector PDO, quizá debería comprobar los parametros de conexión'
-                    . PHP_EOL . $this->showDataconnection__(__DEBUG__);
-            exit();
-        }// evitando salidas fallidas del conector de la base datos
-        try {
-            return $this->__CONEXION->query($consulta/* consulta SQL tipo String */);
-        } catch (PDOException $error) {
-            return $this->tipoErrores__('Existe un problema con la ejecución de la consulta , verifique el codigo SQL enviado', $error);
-        }//fin de trycatch
-    }
-
-    /* este metodo devuelve un array con lo que se tiene */
-
-// funcion para extraer información de las tablas en arreglo
-
-    protected function ___execQuery___($statement/* consulta SQL tipo String */) {
-        if (!is_object($this->__CONEXION)) {
-            print 'No existe un conector PDO, quizá debería comprobar los parametros de conexión'
-                    . PHP_EOL . $this->showDataconnection__(__DEBUG__);
-            exit();
-        }// evitando salidas fallidas del conector de la base datosattributes
-        try {
-            return $this->__CONEXION->exec($statement/* consulta SQL tipo String */);
-        } catch (PDOException $error) {
-            return $this->tipoErrores__('Existe un problema con la ejecución de la consulta , verifique el codigo SQL enviado', $error);
-        }//fin de trycatch
-    }
-
-//ejecuta CRUD de manera rapida sin alterarlas con el PDO devuelve lo que modifico en las tablas
-
-    /* Metodos sin implementar */
-
-    protected function ___ejecutaTransacciones__($sql, $insert) {
-        if (!is_object($this->__CONEXION)) {
-            print 'No existe un conector PDO, quizá debería comprobar los parametros de conexión'
-                    . PHP_EOL . $this->showDataconnection__(__DEBUG__);
-            exit();
-        }// evitando salidas fallidas del conector de la base datos
-        try {
-            $__SQL__ = $this->__CONEXION->prepare($sql);
-            return $__SQL__->execute($insert);
-        } catch (PDOException $error) {
-            return $this->tipoErrores__('Existe un problema con la ejecución de la consulta , verifique el codigo SQL enviado', $error);
-        }//fin de trycatch
-    }
-
-    /* metodos sin implementar */
-
-//Metodos abstractos de la clase Parametros Conexion
-
-    protected function __desconectarConexion__() {
-        unset($this->__CONEXION);
-        unset($this->__PDO);
+            $this->consoleErrors__($error);
+        }
     }
 
     public function __conectorMysql($dsn) {
@@ -170,23 +116,33 @@ class Conexion_Databases implements Conectores_Databases {
             $DSN[2] = $__set->{'pass'};
             return array('link' => $DSN, 'attributes' => array(
                     PDO::ATTR_PERSISTENT => true,
-                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+                    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+                    PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"
             ));
         else:
-            print 'parametros json incorrectos';
+            print 'error -1 : Parametros json incorrectos';
             exit(); /* saliendo de la librerua cuando el dsn esta mal construido */
         endif;
     }
 
-    public function __conectorPostgresql($dns) {
-        
+    /* ================Funciones para la interación con la bases de datos=============================== */
+
+    protected function ___executePdo___($consulta /* consulta SQL tipo String */) {
+        if (is_object($this->__CONEXION)):
+            try {
+                $this->__PDO = $this->__CONEXION->prepare($consulta);
+                $this->__PDO->execute();
+                return true;
+                /* envia el apuntador PDO con toda la información de la consulta utilizando el objeto PDO para otras accciones */
+            } catch (PDOException $error) {
+                $this->consoleErrors__($error);
+                return false;
+            }//fin de trycatch
+        else:
+            print 'error -2 : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
+        endif;
     }
 
-    public function __conectorSqlite($dns) {
-        
-    }
-
-//fin de la funcion desconectar
 }
 
-//Fin De La Clase Conexion Base de datos
+/*Fin De La Clase Conexion Base de datos*/

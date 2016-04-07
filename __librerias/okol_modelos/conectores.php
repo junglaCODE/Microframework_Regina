@@ -12,8 +12,8 @@
 
 interface Conectores_Databases {
     /*definir  los parametros de conexion*/
-    const __ParametrosConexion = '{"user":"monolinux","pass":"********","bd":"demo","server":"localhost","port":3306}'; 
+    const __ParametrosConexion = '{"user":"root","pass":"junglacode","bd":"prueba","server":"localhost","port":3306}'; 
     public function __conectorMysql($dsn);
-    public function __conectorPostgresql($dns);
-    public function __conectorSqlite($dns);
+//    public function __conectorPostgresql($dns);
+//    public function __conectorSqlite($dns);
 }
