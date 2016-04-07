@@ -51,7 +51,9 @@ class Conexion_Databases implements Conectores_Databases {
     static function consoleDebug($comando, $driver = __DRIVER__) {
         switch ($comando):
             case 'info':
-                self::__setConnectionToDB__($driver, __FUNCTION__);
+                if(self::__setConnectionToDB__($driver, __FUNCTION__)):
+                    ':) felicidades su conexión ha sido satisfactoria ahora puede interactuar con su base de datos';
+                endif;
                 break;
             case 'version':
                 print 'Microframework Reginas Clase [ ' . __CLASS__ . ' version ' . self::__VERSION__ . ' ]';
@@ -62,14 +64,17 @@ class Conexion_Databases implements Conectores_Databases {
     }
 
     /**
+     *  La funcion pone por default variable global del config_app pero se puede usar cualquier otra en la instancia
+     * eso si se esta usando varias bases de datos
      * 
-     * @param type $driver
+     * @param string $driver  variable que identifica el drivers a usar en la aplicación
      */
     protected function __setConnectionToDB__($driver = __DRIVER__) {
         $__config__ = self::__loadingParametros__($driver);
         /* genera una lista de parametros apartir del json del archivo de configuracion */
         try {//establece la conexion
             $this->__CONEXION = new PDO($__config__['link'][0], $__config__['link'][1], $__config__['link'][2], $__config__['attributes']);
+            return true;
         } catch (PDOException $error) { //en caso que no se conecte manda los parametros
             if (__DEBUG__):
                 print_r($error);
