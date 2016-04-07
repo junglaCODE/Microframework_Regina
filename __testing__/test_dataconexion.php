@@ -22,9 +22,15 @@ class testing_dataconexion extends Conexion_Databases {
            echo  $rows[0].'----'.$rows[1].'----'.$rows[2].'\n';
         endforeach;
     }
-
+    
+    public function __insertDatosTable(){
+        $_SQL_ = "INSERT INTO `new_table` (`edad`, `nombre`) VALUES (34', 'sharely')";
+        return parent::___execQuery___($SQL);
+    }
+    
 }
 
 $obj = new testing_dataconexion();
+echo 'registros insertados ' . $obj->__insertDatosTable();
 $obj->__setDatosTable();
 

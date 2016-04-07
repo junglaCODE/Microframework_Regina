@@ -59,8 +59,8 @@ class Conexion_Databases implements Conectores_Databases {
                 endif;
                 break;
             case 'version':
-                print 'Microframework Reginas Clase [ ' . __CLASS__ . ' version ' . self::__VERSION__ . ' ]'.PHP_EOL.
-                    '@web = https://github.com/junglaCODE/Microframework_Regina';
+                print 'Microframework Reginas Clase [ ' . __CLASS__ . ' version ' . self::__VERSION__ . ' ]' . PHP_EOL .
+                        '@web = https://github.com/junglaCODE/Microframework_Regina';
                 break;
             default :
                 print 'error -0 : Opción no permitida :(';
@@ -127,7 +127,14 @@ class Conexion_Databases implements Conectores_Databases {
 
     /* ================Funciones para la interación con la bases de datos=============================== */
 
-    protected function ___executePdo___($consulta /* consulta SQL tipo String */) {
+    /**
+     * Esta funcion prepara una funcion y la ejecuta esta funcion es usada para extracción de datos dentro de una
+     * tabla $this->PDO->fetch o fetchALL();
+     * 
+     * @param string $consulta un query generado con lenguaje sql 
+     * @return boolean
+     */
+    protected function ___executePdo___($consulta) {
         if (is_object($this->__CONEXION)):
             try {
                 $this->__PDO = $this->__CONEXION->prepare($consulta);
@@ -140,6 +147,30 @@ class Conexion_Databases implements Conectores_Databases {
             }//fin de trycatch
         else:
             print 'error -2 : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
+            exit();
+        endif;
+    }
+
+    /**
+     * Esta función ejecuta una setencia sql sin validarla y como regreso envia las filas afectadas de dicha sentencias
+     * debe tener cuidado en el uso de esta función ya que como no tiene validaciones puede estar propensas
+     * ataques asi que usarla cuando no exista un formulario de pormedio.
+     * 
+     * @param String $statement  un query generado con lenguaje sql 
+     * @return boolean or integer
+     */
+    protected function ___execQuery___($statement) {
+        if (is_object($this->__CONEXION)) :
+            try {
+                $console = $this->__PDO = $this->__CONEXION->exec($statement);
+                return $console;
+            } catch (PDOException $error) {
+                $this->consoleErrors__($error);
+                return false;
+            }//fin de trycatch
+        else:
+            print 'error -3  : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
+            exit();
         endif;
     }
 
