@@ -24,13 +24,13 @@ class testing_dataconexion extends Conexion_Databases {
     }
     
     public function __insertDatosTable(){
-        $_SQL_ = "INSERT INTO `new_table` (`edad`, `nombre`) VALUES (34', 'sharely')";
-        return parent::___execQuery___($SQL);
+        $_SQL_ = "INSERT INTO `new_table` (`edad`, `nombre`) VALUES (2 ,'regina')";
+        return parent::___execQuery___($_SQL_);
     }
     
 }
 
 $obj = new testing_dataconexion();
 echo 'registros insertados ' . $obj->__insertDatosTable();
-$obj->__setDatosTable();
+//$obj->__setDatosTable();
 

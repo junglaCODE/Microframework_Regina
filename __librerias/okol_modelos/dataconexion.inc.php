@@ -75,7 +75,7 @@ class Conexion_Databases implements Conectores_Databases {
     private function consoleErrors__($error) {
         if (__DEBUG__):
             print_r($error);
-        else:
+        else:            
             print_r('error -' . $error->getCode() . ' : ' . $error->getFile() . ' linea : ' . $error->getLine()
                     . PHP_EOL . $error->getMessage());
         endif;
@@ -130,6 +130,7 @@ class Conexion_Databases implements Conectores_Databases {
     /**
      * Esta funcion prepara una funcion y la ejecuta esta funcion es usada para extracción de datos dentro de una
      * tabla $this->PDO->fetch o fetchALL();
+     * http://php.net/manual/es/pdo.prepare.php
      * 
      * @param string $consulta un query generado con lenguaje sql 
      * @return boolean
@@ -154,13 +155,17 @@ class Conexion_Databases implements Conectores_Databases {
     /**
      * Esta función ejecuta una setencia sql sin validarla y como regreso envia las filas afectadas de dicha sentencias
      * debe tener cuidado en el uso de esta función ya que como no tiene validaciones puede estar propensas
-     * ataques asi que usarla cuando no exista un formulario de pormedio.
+     * ataques asi que usarla cuando no exista un formulario de pormedio. s
+     * 
+     * para validar si se ejecuto o no la sentencia valide que el resultado sea un integer (is_int)
+     * http://php.net/manual/es/pdo.exec.php
      * 
      * @param String $statement  un query generado con lenguaje sql 
-     * @return boolean or integer
+     * @return boolean_integer
      */
     protected function ___execQuery___($statement) {
-        if (is_object($this->__CONEXION)) :
+        /*http://php.net/manual/es/pdo.exec.php*/
+        if (is_object($this->__CONEXION)) : 
             try {
                 $console = $this->__PDO = $this->__CONEXION->exec($statement);
                 return $console;
