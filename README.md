@@ -3,11 +3,8 @@
 - Idea Principal .- Juan Luis Garcia Corrales [ alias @monolinux ]
 - Dedicado con todo mi amor hacia mi hija  --Regina Yolotzi Garcia Morales--
 - Desde Villagran,Gto. Mexico para el mundo entero
-
+- Deseas Ayudarme correo monolinux@junglacode.org
 =====================================================
-
-/*Nota aun el desarrollo no esta en la versión productiva, cuando esta nota se quite podra utilizarlo,
- asi que puedes seguir este proyecto desde 0 hasta donde lllegue si deseas ayudar mandarme un correo a monolinux@junglacode.org*/
 
 # ¿ Que es Regina MicroFrameworks ?
 
@@ -35,31 +32,25 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 - La conexión hacia base de datos:
   - mysql 5.5.x en adelante
   - mariaDB 10.x.x en adelante
-/* :( Por el momento nuestra libreria de conexion soporta esos SGDB */
 
-# WÍINKIL esta palabra es significa cuerpo y es de origen maya. 
-
--En esta sección veremos los directorios principales de regina asi como una pequela descripcion
-
-/*no me metere mas a fondo con los directorios ya que quiero avanzar mas rapido en el desarrollo pero despues de la version estable me podre a documentar :D*/
+# WÍINKIL
+- Esta palabra es significa cuerpo y es de origen maya. 
+*En esta sección veremos los directorios principales de regina asi como una pequela descripcion*
 
 -- WÍINKIL PRINCIPAL DE REGINA
 
 **Microframework_Regina**
-- __config : archivos de configuración global de la aplicación a desarrollar
-- __librerias : lugar donde se almacenaran todas las librerias propias del framework como externar.
-         -okol_modelos .- palabra maya que significa entrada a modelos, esta libreria es la encargada de estableces la conexión a los diferentes SGDB
-                  -conectores .- interface donde se podran especificar el programador los diferentes conexiones a los gestores de base de datos [mysql,postgresql,sqlite]
-                  -seguridad   .- es una clase que nos ayudara a evitar ataques al motor de base de datos como [sqlinjectión ] ademas de agilización de codigo /*aun no esta completa*/
-                  -dataconexión .- esta es la clase que realmente hace la magia para la conexión solo necesita construir el dns.
-- __testing__ : lugar donde se debugeara las clases, se puede borrar el directorio ya que puede estar propensa a errores
+- __config :: archivos de configuración global de la aplicación a desarrollar
+- __librerias :: lugar donde se almacenaran todas las librerias propias del framework como externar.
+    - okol_modelos :: palabra maya que significa entrada a modelos, esta libreria es la encargada de estableces la conexión a los diferentes SGDB
+        - conectores : interface donde se podran especificar el programador los diferentes conexiones a los gestores de base de datos [mysql,postgresql,sqlite]
+        - seguridad   : es una clase que nos ayudara a evitar ataques al motor de base de datos como [sqlinjectión ] ademas de agilización de codigo /*aun no esta completa*/
+        - dataconexión : esta es la clase que realmente hace la magia para la conexión solo necesita construir el dns.
+- __testing__ :: lugar donde se debugeara las clases, se puede borrar el directorio ya que puede estar propensa a errores
 
 --------------------------------------------------------------------------------
 ** Ejemplo simple de conexion  :D **
-class testing_dataconexion extends Conexion_Data public function __insertDatosTable() {
-        $_SQL_ = "INSERT INTO `new_table` (`edad`, `nombre`) VALUES (2 ,'regina')";
-        return parent::___execQuery___($_SQL_);
-    }bases {
+class testing_dataconexion extends Conexion_Databases {
 
     function __construct() {
         parent::__setConnectionToDB__();
@@ -92,6 +83,5 @@ class testing_dataconexion extends Conexion_Databases {
         echo parent::___executeQuery___($sql, array(10001,'@monolinux',':id'=>2));
     }
     }
-
-Genial no crees :)
 --------------------------------------------------------------------------------
+Genial no crees :)
