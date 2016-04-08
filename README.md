@@ -56,7 +56,10 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 
 --------------------------------------------------------------------------------
 ** Ejemplo simple de conexion  :D **
-class testing_dataconexion extends Conexion_Databases {
+class testing_dataconexion extends Conexion_Data public function __insertDatosTable() {
+        $_SQL_ = "INSERT INTO `new_table` (`edad`, `nombre`) VALUES (2 ,'regina')";
+        return parent::___execQuery___($_SQL_);
+    }bases {
 
     function __construct() {
         parent::__setConnectionToDB__();
@@ -68,4 +71,27 @@ class testing_dataconexion extends Conexion_Databases {
         var_dump($table);
     }
     }
+--------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------
+** Ejemplo de una inserccion  :D **
+class testing_dataconexion extends Conexion_Databases {
+
+    function __construct() {
+        parent::__setConnectionToDB__();
+    }
+
+     public function __insertDatosTable() {
+        $_SQL_ = "INSERT INTO `new_table` (`edad`, `nombre`) VALUES (2 ,'regina')";
+        return parent::___execQuery___($_SQL_);
+    }
+
+     public function __createSQLUpdate(){
+        $sql =  parent::__createSqlUpdate__($this->__TABLE['name'],  array_slice($this->__TABLE['cols'],1,2)
+                , $this->__TABLE['cols'][0].'=:id',false); 
+        echo parent::___executeQuery___($sql, array(10001,'@monolinux',':id'=>2));
+    }
+    }
+
+Genial no crees :)
 --------------------------------------------------------------------------------

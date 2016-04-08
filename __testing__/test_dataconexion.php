@@ -61,9 +61,8 @@ class testing_dataconexion extends Conexion_Databases {
 
     public function __createSQLUpdate(){
         $sql =  parent::__createSqlUpdate__($this->__TABLE['name'],  array_slice($this->__TABLE['cols'],1,2)
-                , $this->__TABLE['cols'][0].'=?',false); 
-        //echo $sql;
-        echo parent::___executeQuery___($sql, array(1000,'@monolinux',2));
+                , $this->__TABLE['cols'][0].'=:id',false); 
+        echo parent::___executeQuery___($sql, array(10001,'@monolinux',':id'=>2));
     }
 }
 

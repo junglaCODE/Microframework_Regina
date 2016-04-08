@@ -59,9 +59,9 @@ class Methods_Hacking {
                 $SQL__.= "$campos=:$campos,";
             endforeach;
         else:
-            $keys = array_keys($columns);
-            $placeholder = str_repeat('?,', count($keys));
-            $SQL__.=$placeholder;
+              foreach ($columns as $campos):
+                $SQL__.= "$campos=?,";
+            endforeach;
         endif;
         return substr($SQL__, 0, -1) . '  WHERE ' . $where;
     }
