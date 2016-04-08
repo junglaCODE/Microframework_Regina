@@ -16,8 +16,9 @@ header("Content-Type: text/html;charset=utf-8"); //encabezado para el tipo de co
 
 require_once __DIR__ . '/../../__config/config_app.php';
 require_once __DIR__ . '/conectores.php';
+require_once __DIR__.'/seguridad.class.php';
 
-class Conexion_Databases implements Conectores_Databases {
+class Conexion_Databases extends Methods_Hacking implements Conectores_Databases {
 
     const __VERSION__ = '1.0';
 
@@ -109,8 +110,8 @@ class Conexion_Databases implements Conectores_Databases {
 
     public function __conectorMysql($dsn) {
         /* http://php.net/manual/es/ref.pdo-mysql.connection.php 
-            http://php.net/manual/es/pdo.constants.php */
-        
+          http://php.net/manual/es/pdo.constants.php */
+
         if (json_decode($dsn)) :
             $__set = json_decode($dsn);
             $DSN[0] = "mysql:host=" . $__set->{'server'} . ";port=" . $__set->{'port'} . ";dbname=" . $__set->{'bd'};
@@ -128,8 +129,7 @@ class Conexion_Databases implements Conectores_Databases {
     }
 
     /* ================Funciones para la interación con la bases de datos=============================== */
-    
-    
+
     /**
      * funcion de tipo void que carga el objeto __PDO el cual asu vez puede utilizar muchas de sus funciones
      * este metodo puede usarse cuando el programador  quiere un estilo mas libre ya que puede generar otro
@@ -149,7 +149,6 @@ class Conexion_Databases implements Conectores_Databases {
             $this->__PDO = $this->__CONEXION->prepare($query);
         endif;
     }
-    
 
     /**
      * Esta funcion prepara una funcion y la ejecuta esta funcion es usada para extracción de datos dentro de una
@@ -234,6 +233,40 @@ class Conexion_Databases implements Conectores_Databases {
         endif;
     }
 
+    /**
+     * funcion que ejecuta una setencia apartir de un array definido con sentencias preparadas :variable ó ?
+     * esta funcion puede ser empleada con metodos como __createSqlUpdate__ ó  __createSqlInsert__
+     * para agilizar  la creacion del sql. Para poder saber que si se ejecuto la consulta validar que existe un entero
+     * [is_int ó is_integer ] ya que si es un boolean la ejecución fue un fracaso
+     * 
+     * http://php.net/manual/es/pdo.prepare.php
+     * http://php.net/manual/es/pdostatement.execute.php
+     * --------------------------------------------------------------------------------------------------------------------------
+     * 
+     * ideal para la insercción o actualzación de datos no recomendables para eliminacion ya que puede gastarse
+     * muchos recursos aunque se puede hacer
+     * 
+     * @param string $sql una consulta elaborado sql
+     * @param array $datas datos a insertar
+     * @return boolean_array
+     */
+    protected function ___executeQuery___($sql, $datas) {
+        if (!is_object($this->__CONEXION)) :
+            print 'error -5  : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
+            exit();
+        else:
+            try {
+                $this->__PDO = $this->__CONEXION->prepare($sql);
+                $this->__PDO->execute($datas);
+                return $this->__PDO->rowCount();
+            } catch (PDOException $error) {
+                $this->consoleErrors__($error);
+                return false;
+            }//fin de trycatch
+        endif;
+    }
+
 }
 
 /* Fin De La Clase Conexion Base de datos */
+    

@@ -11,13 +11,13 @@
 
 # ¿ Que es Regina MicroFrameworks ?
 
-Es un proyecto sacado de mi caoticamente, abstrayendo las mejoras cosas que he visto a lo largo de vida como programdor y 
+Es un proyecto sacado de mi caoticamente mente , abstrayendo las mejoras cosas que he visto a lo largo de vida como programador y 
 algunas otras locuras elaborado todas las buenas intenciones de ayudar a toda la comunidad de programadores PHP novatos, ya que de antemano se 
-que mi desarrollo no es el mejor de todos pero se que pueden sacar buenas ideas. 
+que mi desarrollo no es el mejor de todos pero se que pueden extraer buenas ideas y con su ayuda ; pues uno nunca sabe hasta donde llega el poder de la union. 
 
-Por otro lado quize desarrollar este framework, por que tenia la necesidad de aprender mas sobre php y este proyecto me dio 
-varias ideas de seguridad y de buenas practicas, asi que este conocimiento no tenia que quedar arrumbado en un parte olvidada de mi disco duro
-asi que decidi que lo mejor era compartirlo.
+Por otro lado quize desarrollar este framework. Por que tenia la necesidad de aprender mas sobre cualidades mas espcificas php y la tecnología PDO.
+Este proyecto me dio varias ideas de seguridad , y metodos para agilizar codigo y ademas de buenas practicas. Así que este conocimiento no tenia 
+que quedar arrumbado en un parte olvidada de un sector de mi disco duro asi que decidi que lo mejor era compartirlo.
 
 Mas que un framework, que en cierto modo se pretende llegar a ese punto ; Regina es una metodología de desarrollo web, 
 que practicamente unifica de una manera mas comoda las vista-controlador ante eventos de tipo ajax. añadiendo una capa 
@@ -30,7 +30,7 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 ================================================================================
 
 # Requerimientos:
-- PHP version 5.x.x en adelante
+- PHP version 5.x.x en adelante: http://php.net
 - Modulo PDO en PHP fuente : http://php.net/manual/es/book.pdo.php
 - La conexión hacia base de datos:
   - mysql 5.5.x en adelante
@@ -41,30 +41,21 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 
 -En esta sección veremos los directorios principales de regina asi como una pequela descripcion
 
-/*no me metere mas a fondo con los directorios ya que quiero avanzar mas rapido en el desarrollo
-pero despues de la version estable me podre a documentar :D*/
+/*no me metere mas a fondo con los directorios ya que quiero avanzar mas rapido en el desarrollo pero despues de la version estable me podre a documentar :D*/
 
--- WÍINKIL PRINCIPAL DE REGINA /*HASTA EL MOMENTO*/asteringOpenCV/code/edit/master/README.md
+-- WÍINKIL PRINCIPAL DE REGINA
 
 **Microframework_Regina**
 - __config : archivos de configuración global de la aplicación a desarrollar
 - __librerias : lugar donde se almacenaran todas las librerias propias del framework como externar.
+         -okol_modelos .- palabra maya que significa entrada a modelos, esta libreria es la encargada de estableces la conexión a los diferentes SGDB
+                  -conectores .- interface donde se podran especificar el programador los diferentes conexiones a los gestores de base de datos [mysql,postgresql,sqlite]
+                  -seguridad   .- es una clase que nos ayudara a evitar ataques al motor de base de datos como [sqlinjectión ] ademas de agilización de codigo /*aun no esta completa*/
+                  -dataconexión .- esta es la clase que realmente hace la magia para la conexión solo necesita construir el dns.
 - __testing__ : lugar donde se debugeara las clases, se puede borrar el directorio ya que puede estar propensa a errores
 
- /*por el momento son todos los directorios pero habra mas por lo que esten al pendiente*/
-
-**__librerias** : 
--okol_modelos .- palabra maya que significa entrada a modelos, esta libreria es la encargada de estableces la conexión a los diferentes SGDB
-    -conectores .- interface donde se podran especificar el programador los diferentes conexiones a los gestores de base de datos [mysql,postgresql,sqlite]
-    -seguridad   .- es una clase que nos ayudara a evitar ataques al motor de base de datos como [sqlinjectión ] /*aun no esta completa*/
-    -dataconexión .- esta es la clase que realmente hace la magia para la conexión solo necesita construir el dns.
-
-
-**Ejemplo conexion**
 --------------------------------------------------------------------------------
-require  '/../__librerias/okol_modelos/dataconexion.inc.php';
- '{"user":"monolinux","pass":"jungla{code}","bd":"demos","server":"localhost","port":3306}';
---------------------------------------------------------------------------------
+** Ejemplo simple de conexion  :D **
 class testing_dataconexion extends Conexion_Databases {
 
     function __construct() {
@@ -77,5 +68,4 @@ class testing_dataconexion extends Conexion_Databases {
         var_dump($table);
     }
     }
-
 --------------------------------------------------------------------------------
