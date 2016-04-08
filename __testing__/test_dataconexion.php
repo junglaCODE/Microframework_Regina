@@ -28,9 +28,14 @@ class testing_dataconexion extends Conexion_Databases {
         return parent::___execQuery___($_SQL_);
     }
     
+    public function __getDatosTable(){
+        $__console__ = parent::___extractionQuery___('select * from new_table');
+        var_dump($__console__);
+    }
+    
 }
 
 $obj = new testing_dataconexion();
-echo 'registros insertados ' . $obj->__insertDatosTable();
-//$obj->__setDatosTable();
+//echo 'registros insertados ' . $obj->__insertDatosTable();
+$obj->__getDatosTable();
 

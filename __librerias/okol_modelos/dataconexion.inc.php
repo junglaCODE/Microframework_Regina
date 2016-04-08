@@ -75,7 +75,7 @@ class Conexion_Databases implements Conectores_Databases {
     private function consoleErrors__($error) {
         if (__DEBUG__):
             print_r($error);
-        else:            
+        else:
             print_r('error -' . $error->getCode() . ' : ' . $error->getFile() . ' linea : ' . $error->getLine()
                     . PHP_EOL . $error->getMessage());
         endif;
@@ -114,7 +114,7 @@ class Conexion_Databases implements Conectores_Databases {
             $DSN[0] = "mysql:host=" . $__set->{'server'} . ";port=" . $__set->{'port'} . ";dbname=" . $__set->{'bd'};
             $DSN[1] = $__set->{'user'};
             $DSN[2] = $__set->{'pass'};
-            return array('link' => $DSN, 'attributes' => array(
+            return array('link' => $DSN, 'attributes' => array(/* todos los atributos que soporte el manejador Mysql */
                     PDO::ATTR_PERSISTENT => true,
                     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
                     PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES 'utf8'"
@@ -126,11 +126,37 @@ class Conexion_Databases implements Conectores_Databases {
     }
 
     /* ================Funciones para la interación con la bases de datos=============================== */
+    
+    
+    /**
+     * funcion de tipo void que carga el objeto __PDO el cual asu vez puede utilizar muchas de sus funciones
+     * este metodo puede usarse cuando el programador  quiere un estilo mas libre ya que puede generar otro
+     * funcion apartir de esta 
+     * http://php.net/manual/es/class.pdo.php
+     * --------------------------------------------------------------------------------------------
+     * 
+     * esta funcion puede usarse para insert o update o delete con mas seguridad a la hora de inserccion
+     * 
+     * @param type $query una consulta generado con el lenguaje sql
+     */
+    protected function ___createObjPDO___($query) {
+        if (!is_object($this->__CONEXION)):
+            print 'No existe un objeto de tipo conexion, compruebe los parametros de conexión';
+            exit();
+        else:
+            $this->__PDO = $this->__CONEXION->prepare($query);
+        endif;
+    }
+    
 
     /**
      * Esta funcion prepara una funcion y la ejecuta esta funcion es usada para extracción de datos dentro de una
      * tabla $this->PDO->fetch o fetchALL();
      * http://php.net/manual/es/pdo.prepare.php
+     * http://php.net/manual/es/pdostatement.execute.php
+     * -----------------------------------------------------------------------
+     * 
+     * utilizar esta funcion para extraer datos de una tabla y que necesite otro tipo de tratamiento
      * 
      * @param string $consulta un query generado con lenguaje sql 
      * @return boolean
@@ -155,7 +181,10 @@ class Conexion_Databases implements Conectores_Databases {
     /**
      * Esta función ejecuta una setencia sql sin validarla y como regreso envia las filas afectadas de dicha sentencias
      * debe tener cuidado en el uso de esta función ya que como no tiene validaciones puede estar propensas
-     * ataques asi que usarla cuando no exista un formulario de pormedio. s
+     * ataques asi que usarla cuando no exista un formulario de pormedio. 
+     * ------------------------------------------------------------------------------
+     * 
+     * utulizar esta funcion para insert o update , delete
      * 
      * para validar si se ejecuto o no la sentencia valide que el resultado sea un integer (is_int)
      * http://php.net/manual/es/pdo.exec.php
@@ -164,8 +193,7 @@ class Conexion_Databases implements Conectores_Databases {
      * @return boolean_integer
      */
     protected function ___execQuery___($statement) {
-        /*http://php.net/manual/es/pdo.exec.php*/
-        if (is_object($this->__CONEXION)) : 
+        if (is_object($this->__CONEXION)) :
             try {
                 $console = $this->__PDO = $this->__CONEXION->exec($statement);
                 return $console;
@@ -174,11 +202,36 @@ class Conexion_Databases implements Conectores_Databases {
                 return false;
             }//fin de trycatch
         else:
-            print 'error -3  : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
+            print 'error -3 : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
+            exit();
+        endif;
+    }
+
+    /**
+     * Esta funcion genera un arreglo apartir de una consulta generada por el programador para poder validar
+     * dicha consulta que fue exitosa debe validar que sea un array [is_array] ya qe de lo contrario sera un
+     * boleano de tipo false 
+     * http://php.net/manual/es/pdo.query.php
+     * ------------------------------------------------------------------------------------
+     * 
+     * @param String $query  un consulta generado con lenguaje sql 
+     * @param Obj $attrpdo  es un atributo que contiene la funcion query ejem : PDO::FETCH_NUM
+     * @return boolean_array
+     */
+    protected function ___extractionQuery___($query, $attrpdo = null) {
+        if (is_object($this->__CONEXION)):
+            try {
+                return $this->__CONEXION->query($query, $attrpdo);
+            } catch (PDOException $error) {
+                $this->consoleErrors__($error);
+                return false;
+            }//fin de trycatch
+        else:
+            print 'error -4  : La librería no ha detectado ni una conexión hacia un gestor de base de datos';
             exit();
         endif;
     }
 
 }
 
-/*Fin De La Clase Conexion Base de datos*/
+/* Fin De La Clase Conexion Base de datos */
