@@ -108,7 +108,9 @@ class Conexion_Databases implements Conectores_Databases {
     }
 
     public function __conectorMysql($dsn) {
-        /* http://php.net/manual/es/ref.pdo-mysql.connection.php */
+        /* http://php.net/manual/es/ref.pdo-mysql.connection.php 
+            http://php.net/manual/es/pdo.constants.php */
+        
         if (json_decode($dsn)) :
             $__set = json_decode($dsn);
             $DSN[0] = "mysql:host=" . $__set->{'server'} . ";port=" . $__set->{'port'} . ";dbname=" . $__set->{'bd'};
@@ -215,10 +217,10 @@ class Conexion_Databases implements Conectores_Databases {
      * ------------------------------------------------------------------------------------
      * 
      * @param String $query  un consulta generado con lenguaje sql 
-     * @param Obj $attrpdo  es un atributo que contiene la funcion query ejem : PDO::FETCH_NUM
+     * @param Obj $attrpdo  es un atributo que contiene la funcion por default se encuentea PDO::FETCH_ASSOC)
      * @return boolean_array
      */
-    protected function ___extractionQuery___($query, $attrpdo = null) {
+    protected function ___extractionQuery___($query, $attrpdo = PDO::FETCH_ASSOC) {
         if (is_object($this->__CONEXION)):
             try {
                 return $this->__CONEXION->query($query, $attrpdo);
