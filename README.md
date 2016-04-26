@@ -1,10 +1,11 @@
 # Microframework_Regina 
+----------------------------------------------------------------
 **Creado con todas las buenas intenciones de compartir**
 - Idea Principal .- Juan Luis Garcia Corrales [ alias @monolinux ]
 - Dedicado con todo mi amor hacia mi hija  --Regina Yolotzi Garcia Morales--
 - Desde Villagran,Gto. Mexico para el mundo entero
-- Deseas Ayudarme correo monolinux@junglacode.org
-=====================================================
+- Deseas Ayudarme mandame un correo monolinux@junglacode.org  o un tweet @monolinux
+-----------------------------------------------------------------
 
 # ¿ Que es Regina MicroFrameworks ?
 
@@ -24,7 +25,6 @@ sin tener que entrar en la complejidad de conocer un framework mas complejo como
 
 Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lenguaje es el primer paso para aprender cualquier cosa.
 
-================================================================================
 
 # Requerimientos:
 - PHP version 5.x.x en adelante: http://php.net
@@ -50,7 +50,6 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
 
 --------------------------------------------------------------------------------
 ** Ejemplo simple de conexion  :D **
-class testing_dataconexion extends Conexion_Databases {
 
     function __construct() {
         parent::__setConnectionToDB__();
@@ -61,12 +60,11 @@ class testing_dataconexion extends Conexion_Databases {
         $table = $this->__PDO->fetchAll();
         var_dump($table);
     }
-    }
+    
 --------------------------------------------------------------------------------
 
 --------------------------------------------------------------------------------
 ** Ejemplo de una inserccion  :D **
-class testing_dataconexion extends Conexion_Databases {
 
     function __construct() {
         parent::__setConnectionToDB__();
@@ -82,6 +80,6 @@ class testing_dataconexion extends Conexion_Databases {
                 , $this->__TABLE['cols'][0].'=:id',false); 
         echo parent::___executeQuery___($sql, array(10001,'@monolinux',':id'=>2));
     }
-    }
+ 
 --------------------------------------------------------------------------------
 Genial no crees :)

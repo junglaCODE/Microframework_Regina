@@ -3,7 +3,7 @@
 /* creación :
  *         06-octubre-2014
  * @autor: JLGC @monolinux
- * @email: reginas@junglacode.org
+ * @email: monolinux@junglacode.org
  * @web:   reginas.junglacode.org
  * Descripcion:
  *         Clase que establece la conexion hacia la base de datos mediante un

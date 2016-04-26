@@ -1,15 +1,15 @@
 <?php
-
 /*
  * Fecha 8-04/2016
- * creado por JLGC @monolinux 
- * @email: reginas@junglacode.org
- * @web:   reginas.junglacode.org
+ * @author  JLGC @monolinux 
+ * @correo monolinux@junglacode.org
+ * @web   reginas.junglacode.org
  * 
  * Descripcion : esta clase prentende ayudar al programador a previnir ataques de sql_inyeccion o XSS ademas
  * de funciones que agilizara la generación de codigos
  */
 
+header("Content-Type: text/html;charset=utf-8"); //codificación del archivo
 class Methods_Hacking {
 
     /**

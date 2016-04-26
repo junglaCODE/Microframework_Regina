@@ -6,10 +6,10 @@
  * 
  *@fecha .- 7-abril/2016
  *@autor: JLGC @monolinux
- *@email: reginas@junglacode.org
+ *@email: monolinux@junglacode.org
  *@web:   reginas.junglacode.org
  */
-
+header("Content-Type: text/html;charset=utf-8"); //codificación del archivo
 interface Conectores_Databases {
     /*definir  los parametros de conexion*/
     const __ParametrosConexion = '{"user":"root","pass":"junglacode","bd":"prueba","server":"localhost","port":3306}'; 

@@ -4,9 +4,9 @@
  * Archivo que contiene parametros iniciales para configurar la aplicacion 
  * =======================================================================
  * @author JLGC @monolinux
- * @correo [reginas@junglacode.org]
+ * @correo monolinux@junglacode.org
  * @web [reginas.junglacode.org]
- * @fecha [02-10-2015]
+ * @fecha 02-10/2015
  */
 
 header("Content-Type: text/html;charset=utf-8"); //codificación del archivo
