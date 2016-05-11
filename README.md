@@ -46,6 +46,8 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
         - conectores : interface donde se podran especificar el programador los diferentes conexiones a los gestores de base de datos [mysql,postgresql,sqlite]
         - seguridad   : es una clase que nos ayudara a evitar ataques al motor de base de datos como [sqlinjectión ] ademas de agilización de codigo /*aun no esta completa*/
         - dataconexión : esta es la clase que realmente hace la magia para la conexión solo necesita construir el dns.
+    - main_page : Libreria que ayudara crear interfaces html mas rapido utilizando json para generar. Inputs , Selects . Etc
+    Ademas estas clases le va permitir al programador extender clases para unificar frameworks como bootstrap,fundation. Etc
 - __testing__ :: lugar donde se debugeara las clases, se puede borrar el directorio ya que puede estar propensa a errores
 
 --------------------------------------------------------------------------------
@@ -82,4 +84,17 @@ Ya que nosotros tenemos la firme idea de que conocer las bases de todo un lengua
     }
  
 --------------------------------------------------------------------------------
+
+
+--------------------------------------------------------------------------------
+** Ejemplo de la creacion de un widget clase main_page **
+
+echo Widgets_Html::rWInput('text','{"id":"demo","name":"red" , "onclick":"alert(1)"}');
+echo Widgets_Html::rWInput('password','{"id":"demo","name":"blue"}');
+echo Widgets_Html::rWInput('checkbox','{"id":"demo","name":"blue","value":"validar"}');
+echo Widgets_Html::rWTextArea('{"name":"comment","cols":"50"}');
+ 
+--------------------------------------------------------------------------------
+
+
 Genial no crees :)
