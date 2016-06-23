@@ -13,8 +13,8 @@
 
 interface Plantilla_Views {
     
-public static function loadLibreriasJs();
-public static function loadStyleSheets();
-public static function titlePage();
+static function loadLibreriasJs();
+static function loadStyleSheets();
+static function titlePage();
 
 }

@@ -7,8 +7,9 @@
 
 require_once '../__librerias/main_page/estructura_page.inc.php';
 include_once '../__librerias/main_page/plantilla.inc.php';
+
 /*simulador de una plantilla basica html*/
-class Contralador_Plantila  {
+class Controlador_Plantila  {
 
 }
 
@@ -23,7 +24,7 @@ class view_example  implements Plantilla_Views {
     }
 
     public static function titlePage() {
-        echo '<title>yeah motherFucker</title>';
+        echo '<title>hola mundo desde regina</title>';
     }
 
 }
