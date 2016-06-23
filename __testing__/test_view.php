@@ -3,16 +3,13 @@
 /*
  * Este test probara la funcionalidad de la plantilla aplicada en las vistas
  * esto para poner los elementos correctos de dicha app
+ * ademas analizamos que onda con los jutsos
  */
 
 require_once '../__librerias/main_page/estructura_page.inc.php';
 include_once '../__librerias/main_page/plantilla.inc.php';
-
+include_once '../__librerias/jutsus.inc.php';
 /*simulador de una plantilla basica html*/
-class Controlador_Plantila  {
-
-}
-
 class view_example  implements Plantilla_Views {
 
     public static function loadLibreriasJs() {
@@ -29,5 +26,9 @@ class view_example  implements Plantilla_Views {
 
 }
 
-
 view_example::titlePage();
+var_dump(Jutsus_Ninjas::decodificaSerialize(
+        'gfe_rd=cr&ei=N-lrV4_VAoWz8weW4IGgCg&gws_rd=ssl&q=serialize+jquery',true));
+
+echo 'convetir => '.Jutsus_Ninjas::convertcodingjson('@',true);
+echo 'convertir => '. Jutsus_Ninjas::convertcoding('%2F');

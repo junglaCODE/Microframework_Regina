@@ -15,17 +15,22 @@ class Widgets_Html {
     /**
      * Elaboración de input de tipo text el cual se geneara apartir de un json que contiene todos sus parametros
      * que contiene una input tipo text.     
-     * http://www.w3schools.com/html/html_form_attributes.asp
-     * example :
-     * $input {_id_:'none' ,_class_:'none' , _readonly_ :'none'....etc } 
+     * http://www.w3schools.com/html/html_form_input_types.asp
      * @param string $type tipo de input que se desplegara text,password etc
      * @param objJson $json attributes del input id,class,readonly
-     * return String 
+     * return widget
      */
     static function rWInput($type, $json) {
         return "<input type='$type'  " . self::loadProperties__($json) . ">";
     }
 
+    /**
+     * Elaboración de una text area que se genera apartir de un json que contiene todos sus parametros
+     * que pueda tener 
+     * http://www.w3schools.com/tags/tag_textarea.asp
+     * @param objJson $json attributes del input id,class,readonly
+     * return widget
+     */
     static function rWTextArea($json) {
         return "<textarea " . self::loadProperties__($json) . "></textarea>";
     }
