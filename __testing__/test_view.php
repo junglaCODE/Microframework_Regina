@@ -26,9 +26,12 @@ class view_example  implements Plantilla_Views {
 
 }
 
-view_example::titlePage();
-var_dump(Jutsus_Ninjas::decodificaSerialize(
-        'gfe_rd=cr&ei=N-lrV4_VAoWz8weW4IGgCg&gws_rd=ssl&q=serialize+jquery',true));
+//view_example::titlePage();
+//var_dump(Jutsus_Ninjas::decodificaSerialize(
+//        'gfe_rd=cr&ei=N-lrV4_VAoWz8weW4IGgCg&gws_rd=ssl&q=serialize+jquery',true));
+//
+//echo 'convetir => '.Jutsus_Ninjas::convertCodingJson('@',true);
+//echo 'convertir => '. Jutsus_Ninjas::convertCodingJson('%2F');
 
-echo 'convetir => '.Jutsus_Ninjas::convertcodingjson('@',true);
-echo 'convertir => '. Jutsus_Ninjas::convertcoding('%2F');
+echo 'url =>'.Jutsus_Ninjas::getThisURL();
+var_dump(Jutsus_Ninjas::getDirURl());
