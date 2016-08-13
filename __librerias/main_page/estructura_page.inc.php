@@ -11,14 +11,16 @@
  */
 header("Content-Type: text/html;charset=utf-8"); //codificación del archivo
 
-interface estructura_page {
-    public function __loadJS();
-    public function __loadCss();
-    public function __setMenuLeft();
-    public function __setMenuRight();
-    public function __setMenuTop();
-    public function __setHeader();
-    public function __setFooter();
-    public function __setMetas();
-    public function __setContainer($views);
+interface Structure_Page {
+    
+    public static function __loadJS__();
+    public static function __loadCss__();
+    public static function __setMenuLeft__();
+    public static function __setMenuRight__();
+    public static function __setMenuTop__();
+    public static function __setHeader__();
+    public static function __setFooter__();
+    public static function __setMetas__();
+    public static function __setContainer__($views);
+    
 }
